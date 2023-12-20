@@ -28,7 +28,6 @@ As a shortcut we can also run both commands as one as npm it for install and tes
 ## Development 
 
 ### Connect Supabase CLI 
-#### Log in to the Supabase CLI
 1. Install Supabase in MacOS : brew install supabase/tap/supabase
 
 #### Initialize project
@@ -49,10 +48,11 @@ As a shortcut we can also run both commands as one as npm it for install and tes
                       anon key: eyJh......
               service_role key: eyJh......
 
-#### Database Migrations 
+7. Create Table Schema
+#### Database Migrations (https://www.youtube.com/watch?v=Kx5nHBmIxyQ)
 Database changes are managed through "migrations." Database migrations are a common way of tracking changes to your database over time.
-7. Create migration file : supabase db diff -use-migra initial_schema -f initial_schema 
-8. If changed Database Schema we can run : supabase db diff -use-migra initial_schema -f initial_schema   again to generate another migration file to take care of the newly introduced column
+8. Create migration file : supabase db diff -use-migra initial_schema -f initial_schema 
+9. If changed Database Schema we can run : supabase db diff -use-migra initial_schema -f initial_schema   again to generate another migration file to take care of the newly introduced column
 
 ## Create Server (Expressjs)
 1. Create Server : http.createServer().listen(PORT)
