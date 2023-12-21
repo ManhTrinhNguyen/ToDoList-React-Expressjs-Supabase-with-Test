@@ -9,7 +9,7 @@ async function httpGetAllLists(req, res) {
     .from('todo-lists')
     .select('*')
 
-  res.status(200).send(data)
+  res.status(200).json(data)
 }
 
 async function httpGetListById(req, res) {
@@ -27,6 +27,12 @@ async function httpCreateList(req, res) {
   const { todo, description } = req.body
   let date = new Date()
 
+  if (!todo || !description || !date) {
+    return res.status(400).json({
+      error: 'Missing Property Required'
+    })
+  };
+
   const { data, error } = await supabase
     .from('todo-lists')
     .insert([
@@ -38,7 +44,7 @@ async function httpCreateList(req, res) {
     ])
     .select();
   
-  if (error) console.log(error);
+  //if (error) console.log(error);
 
   res.status(201).send(data);
 }
@@ -57,7 +63,7 @@ async function httpUpdateList(req, res) {
   
   if (error) console.log(error)
 
-  res.send(data)
+  res.status(200).send(data)
 }
 
 async function httpDeleteList(req, res) {
@@ -67,7 +73,7 @@ async function httpDeleteList(req, res) {
     .delete()
     .eq('id', id);
   
-  res.send(data)
+  res.status(202).send(data)
 }
 
 module.exports = {
