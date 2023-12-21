@@ -74,7 +74,8 @@ Database changes are managed through "migrations." Database migrations are a com
 ## Testing in Nodejs .
 1. Install Jest(https://jestjs.io/) and Superjest (https://www.npmjs.com/package/supertest)
 
-## Testing in Supabase (https://supabase.com/docs/guides/database/extensions/pgtap#testing-tables)
+## Testing in Supabase 
+https://supabase.com/docs/guides/database/extensions/pgtap#testing-tables
 
 ## Front end with React 
 Install react app : create-react-app 
