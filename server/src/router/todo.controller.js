@@ -24,10 +24,10 @@ async function httpGetListById(req, res) {
 }
 
 async function httpCreateList(req, res) {
-  const { todo, description } = req.body
+  const { todo } = req.body
   let date = new Date()
 
-  if (!todo || !description || !date) {
+  if (!todo || !date) {
     return res.status(400).json({
       error: 'Missing Property Required'
     })
@@ -38,7 +38,6 @@ async function httpCreateList(req, res) {
     .insert([
       {
         todo: todo,
-        description: description,
         created_at: date.toLocaleString()
       }
     ])

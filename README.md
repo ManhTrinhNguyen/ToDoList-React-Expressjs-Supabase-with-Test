@@ -4,6 +4,11 @@ TODO List
 ## Front end 
 Reactjs
 Installing React : create-react-app project-name
+
+#### React Form (https://www.w3schools.com/react/react_forms.asp)
+onChange: occurs when the value of an HTML element is changed.  
+onSubmit : triggers a form submission when it is added to a form element.
+
 ### State Management in React
 #### Redux
 Redux is a state management library that allows you to manage the state of your JavaScript applications more efficiently and predictably.
