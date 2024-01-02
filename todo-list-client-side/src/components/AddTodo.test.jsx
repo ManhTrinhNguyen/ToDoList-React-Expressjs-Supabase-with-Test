@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event'
 import { it, describe, expect } from "vitest";
 import AddTodo from "./AddTodo";
 
-describe('Add ToDo', () => { 
+describe('Add ToDo', () => {
   it('Should render correctly', () => {
     render(<AddTodo />)
     screen.debug()
@@ -39,5 +39,5 @@ describe('Add ToDo', () => {
     expect(todos[1]).toHaveTextContent('walk the dog')
 
     expect(todos.length).toEqual(2)
-  })
- })
+  });
+});

@@ -31,22 +31,13 @@ export const postData = createAsyncThunk('todo/addTodo', async (text) => {
   }
 })
 
+
+
+
 export const todoSlice = createSlice({
   name: 'todo',
   initialState,
-  reducers: {
-    addTodo: (state, action) => {
-      state.lists.push(
-        {
-          created: new Date().toLocaleString(),
-          todo: action.payload
-        })
-    },
-
-    deleteTodo: (state, action) => {
-      state.lists = state.lists.filter(list => list.id !== action.payload)
-    }
-  },
+  reducers: {},
 
   extraReducers: (builder) => {
     builder
@@ -68,7 +59,7 @@ export const todoSlice = createSlice({
       })
       .addCase(postData.fulfilled, (state, action) => {
         state.status = 'succeeded'
-        state.lists.push(action.payload)
+        state.lists.push(...action.payload)
       })
       .addCase(postData.rejected, (state, action) => {
         state.status = 'failed';

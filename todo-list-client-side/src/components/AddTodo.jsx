@@ -1,28 +1,21 @@
 import { useState } from "react";
-import TodoList from "./TodoList";
-function AddTodo() {
-  const [todo, setTodo] = useState({
-    text: '',
-    id: ''
-  })
-  const [lists, setList] = useState([])
+import { postData } from "../redux/todoSlice";
+import { useDispatch } from "react-redux";
 
+function AddTodo() {
+  
+  const dispatch = useDispatch()
+  
+  const [todo, setTodo] = useState('')
   // Handle Change 
   function handleChange(e) {
-    //setTodo(e.target.value)
-    setTodo({
-      text: e.target.value,
-      id: Math.random()
-    })
+    setTodo(e.target.value)
   }
-  
-  function handleSubmit(e) {
-    e.preventDefault()
-    setList([...lists, todo])
-    setTodo({
-      text: '',
-      id: ''
-    })
+
+function handleSubmit(e) {
+    e.preventDefault();
+    dispatch(postData(todo))
+    setTodo('')
   }
 
   return (
@@ -32,13 +25,12 @@ function AddTodo() {
           type='text'
           placeholder='Create a new todo...'
           name='list'
-          value={todo.text}
+          value={todo}
           onChange={handleChange}
           className="input"
         />
         <button className="form-btn" type='submit'>+</button>
       </form>
-      <TodoList lists={lists} />
     </>
     
   )
