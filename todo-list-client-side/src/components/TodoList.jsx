@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux"
-import { fetchData } from "../redux/todoSlice"
+import { fetchData, deleteData } from "../redux/todoSlice"
 import { useEffect } from "react"
 
 function TodoList() {
@@ -7,13 +7,15 @@ function TodoList() {
   const lists = useSelector(state => state.todo.lists)
   const status = useSelector(state => state.todo.status)
   const error = useSelector(state => state.todo.error)
-
+  
   useEffect(() => {
-
     dispatch(fetchData())
-    
   }, [dispatch]);
-
+ 
+  function hanleDelete(id) {
+    dispatch(deleteData(id))
+  }
+  
   if (status === 'loading') {
     return <div>Loading ...</div>
   }
@@ -23,8 +25,14 @@ function TodoList() {
 
   return (
     <ul className="lists">
-      {lists.map(list => (
-        <li key={list.id}>{ list.todo }</li>
+      {lists?.map(list => (
+        <div  key={list.id}>
+          <li>{list.todo}</li>
+          <button onClick={() => {
+            hanleDelete(list.id)
+          }}>Delete</button>
+        </div>
+        
       ))}
     </ul>
   )

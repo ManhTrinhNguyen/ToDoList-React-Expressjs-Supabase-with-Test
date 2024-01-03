@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from 'axios'
 
-const initialState = {
+export const initialState = {
   lists: [],
   status: 'idle', // 'idle' | 'loading' | 'succeeded' | 'failed'
   error: null
@@ -18,6 +18,7 @@ export const fetchData = createAsyncThunk('todo/fetchTodo', async () => {
   
 })
 
+// Add Data to database
 export const postData = createAsyncThunk('todo/addTodo', async (text) => {
   const data = {
     todo: text, 
@@ -31,13 +32,39 @@ export const postData = createAsyncThunk('todo/addTodo', async (text) => {
   }
 })
 
+// Delete Data
+
+export const deleteDataApi = async (id) => {
+  try {
+    const response = await axios.delete(`http://localhost:8000/todo/${id}`)
+    return response.data
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const deleteData = createAsyncThunk('todo/deleteTodo', async (id) => {
+  try {
+    await deleteDataApi(id)
+    return id
+  } catch (error) {
+    console.log(error)
+  }
+})
 
 
 
 export const todoSlice = createSlice({
   name: 'todo',
   initialState,
-  reducers: {},
+  reducers: {
+    getTodo: (state, action) => {
+      state.lists = action.payload
+    },
+    deleteTodo: (state, action) => {
+      state.lists.filter(list => list.id !== action.payload)
+    }
+  },
 
   extraReducers: (builder) => {
     builder
@@ -65,8 +92,21 @@ export const todoSlice = createSlice({
         state.status = 'failed';
         state.error = action.error.message
       })
+      
+      // Delete data case 
+      .addCase(deleteData.pending, state => {
+        state.status = 'loading'
+      })
+      .addCase(deleteData.fulfilled, (state, action) => {
+        state.status = 'succeeded',
+        state.lists.filter(list => list.id !== action.payload)
+      })
+      .addCase(deleteData.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message
+      })
   }
 });
 
-export const { addTodo, deleteTodo } = todoSlice.actions;
+export const { getTodo, deleteTodo } = todoSlice.actions;
 export default todoSlice.reducer

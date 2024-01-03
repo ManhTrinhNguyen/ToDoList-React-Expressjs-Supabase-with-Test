@@ -1,31 +1,41 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import App from './App';
+import { renderWithProviders } from './utils/utils-for-test';
+import MockAdapter from 'axios-mock-adapter'
+import axios from 'axios';
 
-describe('App', () => {
-  it('App - Test Img', () => {
-    render(<App />);
+// Hardcode data testing
+const todoData = {
+  id: 1,
+  created_at: new Date().toLocaleString(),
+  todo: 'Learning Redux Toolkit'
+}
 
-    const todoImg = screen.getByAltText('Todo')
-    const sunImg = screen.getByAltText('sun-mode')
+// mock network request
+const mock = new MockAdapter(axios)
+const mockNetworkRequest = () => {
+  mock.onGet('http://localhost:8000/todo').reply(200, todoData)
+};
 
-    expect(todoImg).toBeInTheDocument();
-    expect(sunImg).toBeInTheDocument()
+const unMockNetworkRequests = () => {
+  mock.resetHistory();
+};
+
+describe('Todo Slice', () => {
+  beforeEach(() => {
+    mockNetworkRequest()
+  });
+
+  afterEach(() => {
+    unMockNetworkRequests()
+  });
+
+  it('Should fetch todo list', async () => {
+    const { data } = await axios.get('http://localhost:8000/todo');
+    console.log(data);
+    expect(data).toEqual(todoData)
+
   })
-  it('App - Render Test Form In The Document', () => {
-    render(<App />)
-    const input = screen.getByPlaceholderText('Create a new todo...')
-    const btn = screen.getByRole('button', {
-      name: '+'
-    })
-    expect(input).toBeInTheDocument();
-    expect(btn).toBeInTheDocument();
-  })
-  it('App - Render Test Footer In the Document', () => {
-    render(<App />)
-    const allBtn = screen.getByRole('button', {
-      name: 'All'
-    })
-    expect(allBtn).toBeInTheDocument();
-  })
-})
+});
+
