@@ -1,41 +1,25 @@
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import App from './App';
-import { renderWithProviders } from './utils/utils-for-test';
-import MockAdapter from 'axios-mock-adapter'
-import axios from 'axios';
+import { renderWithProviders } from "./utils/utils-for-test";
+import App from "./App";
+import { screen } from "@testing-library/react";
+import { describe, test, expect } from "vitest";
 
-// Hardcode data testing
-const todoData = {
-  id: 1,
-  created_at: new Date().toLocaleString(),
-  todo: 'Learning Redux Toolkit'
-}
 
-// mock network request
-const mock = new MockAdapter(axios)
-const mockNetworkRequest = () => {
-  mock.onGet('http://localhost:8000/todo').reply(200, todoData)
-};
+describe('Test App', () => {
+  test('Title Todo and logo in App', () => {
+    renderWithProviders(<App />)
+    expect(screen.getByAltText('Todo')).toBeInTheDocument()
+    expect(screen.getByAltText('sun-mode')).toBeInTheDocument()
+  })
+  
+  test('AddTodo Component in App', () => {
+    renderWithProviders(<App />)
+    const input = screen.getByRole('textbox')
+    expect(input).toBeInTheDocument();
+  })
 
-const unMockNetworkRequests = () => {
-  mock.resetHistory();
-};
-
-describe('Todo Slice', () => {
-  beforeEach(() => {
-    mockNetworkRequest()
-  });
-
-  afterEach(() => {
-    unMockNetworkRequests()
-  });
-
-  it('Should fetch todo list', async () => {
-    const { data } = await axios.get('http://localhost:8000/todo');
-    console.log(data);
-    expect(data).toEqual(todoData)
-
+  test('Footer Component in App', () => {
+    renderWithProviders(<App />)
+    expect(screen.getByRole('button', { name: 'All'})).toBeInTheDocument()
   })
 });
 

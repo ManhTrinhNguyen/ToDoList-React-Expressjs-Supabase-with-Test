@@ -57,14 +57,7 @@ export const deleteData = createAsyncThunk('todo/deleteTodo', async (id) => {
 export const todoSlice = createSlice({
   name: 'todo',
   initialState,
-  reducers: {
-    getTodo: (state, action) => {
-      state.lists = action.payload
-    },
-    deleteTodo: (state, action) => {
-      state.lists.filter(list => list.id !== action.payload)
-    }
-  },
+  reducers: {},
 
   extraReducers: (builder) => {
     builder
