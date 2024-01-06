@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { postData } from "../redux/todoSlice";
 import { useDispatch } from "react-redux";
+import TodoList from "./TodoList";
 
 function AddTodo() {
   
@@ -31,6 +32,7 @@ function handleSubmit(e) {
         />
         <button className="form-btn" type='submit'>+</button>
       </form>
+      <TodoList />
     </>
     
   )

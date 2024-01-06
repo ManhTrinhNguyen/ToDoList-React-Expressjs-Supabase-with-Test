@@ -79,6 +79,7 @@ export const todoSlice = createSlice({
       })
       .addCase(postData.fulfilled, (state, action) => {
         state.status = 'succeeded'
+        console.log(action)
         state.lists.push(...action.payload)
       })
       .addCase(postData.rejected, (state, action) => {

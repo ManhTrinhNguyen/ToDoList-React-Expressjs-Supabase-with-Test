@@ -13,7 +13,6 @@ function App() {
         <img src={sunImgUrl} className="sun-mode" alt='sun-mode'/>
       </div>
       <AddTodo />
-     <TodoList />
       <Footer />
     </div>
   );

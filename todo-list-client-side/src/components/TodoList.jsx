@@ -12,8 +12,8 @@ function TodoList() {
     dispatch(fetchData())
   }, [dispatch]);
  
-  function hanleDelete(id) {
-    dispatch(deleteData(id))
+  async function hanleDelete(id) {
+   dispatch(deleteData(id))
   }
   
   if (status === 'loading') {
@@ -28,7 +28,7 @@ function TodoList() {
       {lists?.map(list => (
         <div  key={list.id}>
           <li>{list.todo}</li>
-          <button onClick={() => {
+          <button onClick={async () => {
             hanleDelete(list.id)
           }}>Delete</button>
         </div>
